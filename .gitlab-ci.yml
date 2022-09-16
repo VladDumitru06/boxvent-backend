@@ -10,11 +10,13 @@ stages:
     - test
 
 build: 
-    tags: -firstRunner
+    tags: 
+    - firstRunner
     stage: build 
     script: -./gradlew assemble 
 test: 
-    tags: -firstRunner
+    tags: 
+    - firstRunner
     stage: test 
     script: 
         - ./gradlew test
