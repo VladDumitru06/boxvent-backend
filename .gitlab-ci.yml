@@ -4,15 +4,15 @@
 # isolated from any previous builds. 
 variables: 
     GRADLE_OPTS: "-Dorg.gradle.daemon=false"
-    GRADLE_USER_HOME: '.gradle-cache'
+
 stages: 
     - build 
     - test
 
 build: 
     stage: build 
-    script: -./gradlew assemble 
+    script: -gradlew assemble 
 test: 
     stage: test 
     script: 
-        - ./gradlew test
+        - gradlew test
