@@ -2,17 +2,52 @@
 # is usually a priority over speed in CI environments. Using a fresh 
 # runtime for each build is more reliable since the runtime is completely 
 # isolated from any previous builds. 
-variables: 
-    GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+#variables: 
+#    GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+#
+#stages: 
+#    - build 
+#    - test
+#
+#build: 
+#    stage: build 
+#    script: -./gradlew assemble 
+#test: 
+#    stage: test 
+#    script: 
+#        - ./gradlew test
+image: java:8-jdk
 
-stages: 
-    - build 
-    - test
+stages:
+  - build
+  - test
 
-build: 
-    stage: build 
-    script: -./gradlew assemble 
-test: 
-    stage: test 
-    script: 
-        - ./gradlew test
+before_script:
+#  - echo `pwd` # debug
+#  - echo "$CI_BUILD_NAME, $CI_BUILD_REF_NAME $CI_BUILD_STAGE" # debug
+  - export GRADLE_USER_HOME=`pwd`/.gradle
+
+cache:
+  paths:
+    - .gradle/wrapper
+    - .gradle/caches
+
+build:
+  stage: build
+  script:
+    - ./gradlew assemble
+  artifacts:
+    paths:
+      - build/libs/*.jar
+    expire_in: 1 week
+  only:
+    - master
+
+test:
+  stage: test
+  script:
+    - ./gradlew check
+
+
+after_script:
+  - echo "End CI"
