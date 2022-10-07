@@ -6,7 +6,7 @@ import com.boxvent.boxventwebsite.business.exception.FighterNameAlreadyExistsExc
 import com.boxvent.boxventwebsite.domain.CreateFighterRequest;
 import com.boxvent.boxventwebsite.domain.CreateFighterResponse;
 import com.boxvent.boxventwebsite.presistence.FighterRepository;
-import com.boxvent.boxventwebsite.presistence.entity.FighterEntity;
+import com.boxvent.boxventwebsite.presistence.Impl.entity.FighterEntity;
 import org.springframework.stereotype.Service;
 
 @Service

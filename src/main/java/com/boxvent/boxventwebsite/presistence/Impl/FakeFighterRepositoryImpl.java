@@ -1,13 +1,12 @@
 package com.boxvent.boxventwebsite.presistence.Impl;
 
 import com.boxvent.boxventwebsite.presistence.FighterRepository;
-import com.boxvent.boxventwebsite.presistence.entity.FighterEntity;
+import com.boxvent.boxventwebsite.presistence.Impl.entity.FighterEntity;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public class FakeFighterRepositoryImpl implements FighterRepository {

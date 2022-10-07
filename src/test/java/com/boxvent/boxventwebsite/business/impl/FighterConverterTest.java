@@ -1,7 +1,7 @@
 package com.boxvent.boxventwebsite.business.impl;
 
 import com.boxvent.boxventwebsite.domain.Fighter;
-import com.boxvent.boxventwebsite.presistence.entity.FighterEntity;
+import com.boxvent.boxventwebsite.presistence.Impl.entity.FighterEntity;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
+@CrossOrigin(origins= {"*"}, maxAge = 4800, allowCredentials = "false" )
 @AllArgsConstructor
 @RequestMapping("/fighters")
 public class FightersController {

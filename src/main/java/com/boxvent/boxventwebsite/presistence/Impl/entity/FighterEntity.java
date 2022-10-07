@@ -1,4 +1,4 @@
-package com.boxvent.boxventwebsite.presistence.entity;
+package com.boxvent.boxventwebsite.presistence.Impl.entity;
 
 import lombok.Builder;
 import lombok.Data;

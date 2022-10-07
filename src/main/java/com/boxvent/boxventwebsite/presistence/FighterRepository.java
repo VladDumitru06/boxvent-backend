@@ -1,9 +1,8 @@
 package com.boxvent.boxventwebsite.presistence;
 
-import com.boxvent.boxventwebsite.presistence.entity.FighterEntity;
+import com.boxvent.boxventwebsite.presistence.Impl.entity.FighterEntity;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface FighterRepository {
     boolean existByName(String name);
