@@ -8,12 +8,19 @@ variables:
 
 stages:
   - build
+  - analyze
   - test
 
 build:
   stage: build
   script:
     - ./gradlew assemble
+
+analyze:
+  stage: analyze
+  script:
+    - ./gradlew sonar
+
 
 test:
   stage: test
