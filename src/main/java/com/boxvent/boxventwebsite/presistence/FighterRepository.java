@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface FighterRepository extends JpaRepository<FighterEntity,Long> {
     boolean existsByName(String name);
+    FighterEntity findByName(String name);
 }
