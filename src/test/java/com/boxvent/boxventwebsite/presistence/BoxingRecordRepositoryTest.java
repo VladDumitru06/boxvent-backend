@@ -87,4 +87,21 @@ class BoxingRecordRepositoryTest {
         assertEquals(expectedRecord,returnedRecord);
 
     }
+    @Test
+    void findByFighter_ShouldReturnNullWhenNoFightersRecordFound()
+    {
+        FighterEntity fighter = FighterEntity.builder().name("Jackie Chan Jr.").build();
+
+        if(entityManager.contains(fighter))
+        {
+            fighter = fighterRepository.findByName(fighter.getName());
+        }
+        else
+        {
+            entityManager.persist(fighter);
+        }
+        BoxingRecordEntity returnedRecord = boxingRecordRepository.findByFighter(fighter);
+        assertNull(returnedRecord);
+
+    }
 }
