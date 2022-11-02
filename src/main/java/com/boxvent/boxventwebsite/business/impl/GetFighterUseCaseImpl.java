@@ -11,12 +11,13 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class GetFighterUseCaseImpl implements GetFighterUseCase {
     private FighterRepository fighterRepository;
+    private FighterConverter fighterConverter;
 
     @Override
     public Fighter getFighter(long id) {
-        FighterEntity fighterEntity = fighterRepository.findById(id);
+        FighterEntity fighterEntity = fighterRepository.getReferenceById(id);
         if(fighterEntity == null)
             return null;
-        return FighterConverter.convert(fighterEntity);
+        return fighterConverter.convert(fighterEntity);
     }
 }

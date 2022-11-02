@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -14,7 +15,12 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 public class CreateFighterRequest {
     @NotNull
+    @Length(min = 2)
     private String name;
-    @NotBlank
-    private  String record;
+    @NotNull
+    private  Long wins;
+    @NotNull
+    private  Long draws;
+    @NotNull
+    private  Long loses;
 }

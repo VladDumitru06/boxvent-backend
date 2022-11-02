@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-@Repository
-public class FakeFighterRepositoryImpl implements FighterRepository {
-    private static long NEXT_ID = 1;
+//@Repository
+public class FakeFighterRepositoryImpl {
+   /* private static long NEXT_ID = 1;
     private final List<FighterEntity> savedFighters;
     public FakeFighterRepositoryImpl() { this.savedFighters = new ArrayList<>();}
 
@@ -47,5 +47,5 @@ public class FakeFighterRepositoryImpl implements FighterRepository {
                 .filter(fighterEntity -> fighterEntity.getId() == fighterId)
                 .findFirst()
                 .orElse(null);
-    }
+    }*/
 }

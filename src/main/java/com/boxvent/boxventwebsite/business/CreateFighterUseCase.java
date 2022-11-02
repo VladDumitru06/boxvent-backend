@@ -5,4 +5,4 @@ import com.boxvent.boxventwebsite.domain.CreateFighterResponse;
 
 public interface CreateFighterUseCase {
     CreateFighterResponse createFighter(CreateFighterRequest request);
-}
+ }

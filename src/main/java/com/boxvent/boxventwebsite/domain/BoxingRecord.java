@@ -9,8 +9,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Fighter {
-    private Long id;
-    private String name;
-    private BoxingRecord boxingRecord;
+public class BoxingRecord {
+    private Fighter fighter;
+    private Long wins;
+    private Long loses;
+    private Long draws;
 }

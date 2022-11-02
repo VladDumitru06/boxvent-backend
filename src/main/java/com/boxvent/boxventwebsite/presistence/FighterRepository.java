@@ -1,13 +1,10 @@
 package com.boxvent.boxventwebsite.presistence;
 
 import com.boxvent.boxventwebsite.presistence.Impl.entity.FighterEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface FighterRepository {
-    boolean existByName(String name);
-    FighterEntity add(FighterEntity fighter);
-    void deleteById(Long fighterId);
-    List<FighterEntity> getAll();
-    FighterEntity  findById(long fighterId);
+public interface FighterRepository extends JpaRepository<FighterEntity,Long> {
+    boolean existsByName(String name);
 }
