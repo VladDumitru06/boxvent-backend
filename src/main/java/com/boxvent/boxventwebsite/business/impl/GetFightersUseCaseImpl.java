@@ -8,6 +8,8 @@ import com.boxvent.boxventwebsite.domain.GetAllFightersResponse;
 import com.boxvent.boxventwebsite.presistence.FighterRepository;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -16,8 +18,9 @@ public class GetFightersUseCaseImpl implements GetFightersUseCase {
     private FighterRepository fighterRepository;
     private FighterConverter fighterConverter;
     @Override
+    @Transactional
     public GetAllFightersResponse getFighters() {
-        List<Fighter> fighters = null;
+        List<Fighter> fighters = new ArrayList<>();
         for(FighterEntity fighterEntity : fighterRepository.findAll())
         {
             fighters.add(fighterConverter.convert(fighterEntity));

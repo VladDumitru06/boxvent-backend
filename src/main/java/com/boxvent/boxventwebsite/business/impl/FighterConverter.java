@@ -10,16 +10,15 @@ import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 @Service
 final class FighterConverter {
-    BoxingRecordConverter boxingRecordConverter;
+    private BoxingRecordConverter boxingRecordConverter;
     public  Fighter convert(FighterEntity fighter) {
         return Fighter.builder()
                 .id(fighter.getId())
                 .name(fighter.getName())
-                .boxingRecord(boxingRecordConverter.GetBoxingRecord(fighter))
+                .boxingRecord(boxingRecordConverter.convert(fighter))
                 .build();
     }
 

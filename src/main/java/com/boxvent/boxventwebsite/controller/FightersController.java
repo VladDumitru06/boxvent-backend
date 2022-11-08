@@ -29,7 +29,7 @@ public class FightersController {
         return ResponseEntity.ok(response);
     }
     @GetMapping("{id}")
-    public ResponseEntity<Fighter> getCountry(@PathVariable(value="id") final long id){
+    public ResponseEntity<Fighter> getFighter(@PathVariable(value="id") final long id){
         final Fighter fighter = getFighterUseCase.getFighter(id);
         if(fighter == null){
             return ResponseEntity.notFound().build();

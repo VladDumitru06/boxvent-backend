@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BoxingRecord {
-    private Fighter fighter;
     private Long wins;
     private Long loses;
     private Long draws;

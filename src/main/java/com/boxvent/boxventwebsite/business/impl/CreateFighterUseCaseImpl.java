@@ -31,9 +31,9 @@ public class CreateFighterUseCaseImpl implements CreateFighterUseCase {
         FighterEntity newFighter = FighterEntity.builder()
                 .name(request.getName())
                 .build();
-        fighterRepository.save(newFighter);
+        FighterEntity savedFighter =fighterRepository.save(newFighter);
         saveNewRecord(request.getWins(), request.getDraws(), request.getLoses(), newFighter);
-        return  newFighter;
+        return  savedFighter;
     }
     private BoxingRecordEntity saveNewRecord(Long wins,Long draws,Long loses,FighterEntity fighter)
     {

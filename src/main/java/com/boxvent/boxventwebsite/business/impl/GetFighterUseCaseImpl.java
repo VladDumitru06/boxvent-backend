@@ -7,6 +7,8 @@ import com.boxvent.boxventwebsite.presistence.Impl.entity.FighterEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @Service
 @AllArgsConstructor
 public class GetFighterUseCaseImpl implements GetFighterUseCase {
@@ -14,6 +16,7 @@ public class GetFighterUseCaseImpl implements GetFighterUseCase {
     private FighterConverter fighterConverter;
 
     @Override
+    @Transactional
     public Fighter getFighter(long id) {
         FighterEntity fighterEntity = fighterRepository.getReferenceById(id);
         if(fighterEntity == null)
