@@ -4,18 +4,24 @@ import com.boxvent.boxventwebsite.business.CreateFighterUseCase;
 import com.boxvent.boxventwebsite.business.GetFighterUseCase;
 import com.boxvent.boxventwebsite.business.GetFightersUseCase;
 import com.boxvent.boxventwebsite.domain.*;
+import com.boxvent.boxventwebsite.presistence.Impl.entity.FighterEntity;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.internal.verification.NoInteractions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import javax.annotation.security.RunAs;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -45,7 +51,7 @@ class FightersControllerTest {
                 .fighters(List.of(
                         Fighter.builder().id(1L).name("Vlad the boxer").boxingRecord(vladRecord).build(),
                         Fighter.builder().id(2L).name("Deji").boxingRecord(dejiRecord).build()
-                        )).build();
+                )).build();
         when(getFightersUseCaseMock.getFighters())
                 .thenReturn(response);
 
@@ -56,16 +62,16 @@ class FightersControllerTest {
                         APPLICATION_JSON_VALUE))
                 .andExpect(content().json
                         ("""
-                            {"fighters" : [{
-                                            "id" : 1,
-                                            "name" : "Vlad the boxer",
-                                            "boxingRecord" : {"wins": 10,"draws": 0,"loses" : 2}
-                            },{
-                                            "id" : 2,
-                                            "name" : "Deji",
-                                            "boxingRecord" : {"wins": 15,"draws": 1,"loses" : 0}
-                            }]}    
-                            """));
+                                {"fighters" : [{
+                                                "id" : 1,
+                                                "name" : "Vlad the boxer",
+                                                "boxingRecord" : {"wins": 10,"draws": 0,"loses" : 2}
+                                },{
+                                                "id" : 2,
+                                                "name" : "Deji",
+                                                "boxingRecord" : {"wins": 15,"draws": 1,"loses" : 0}
+                                }]}    
+                                """));
         verify(getFightersUseCaseMock).getFighters();
         verifyNoInteractions(createFighterUseCaseMock);
         verifyNoInteractions(getFighterUseCase);
@@ -84,48 +90,48 @@ class FightersControllerTest {
                 .thenReturn(CreateFighterResponse.builder().fighterId(1337L).build());
 
         mockMvc.perform(MockMvcRequestBuilders.post("/fighters")
-                .contentType(APPLICATION_JSON_VALUE)
-                .content("""
-                        {
-                            "name" : "Vlad the boxer",
-                            "wins":10,
-                            "draws":1,
-                            "loses":2
-                            
-                        }
-                        """))
+                        .contentType(APPLICATION_JSON_VALUE)
+                        .content("""
+                                {
+                                "name":"Vlad the boxer",
+                                "wins":10,
+                                "draws":1,
+                                "loses":2  
+                                }
+                                """))
                 .andDo(print())
                 .andExpect(status().isCreated())
                 .andExpect(header().string("Content-Type", APPLICATION_JSON_VALUE))
                 .andExpect(content().json("""
-{"fighterId": 1337}
-"""));
+                        {"fighterId": 1337}
+                        """));
 
         verify(createFighterUseCaseMock).createFighter(expectedFighter);
     }
+
     @Test
     void createFighter_shouldNotCreateAndReturn400_WhenMissingFields() throws
-            Exception{
+            Exception {
         mockMvc.perform(MockMvcRequestBuilders.post("/fighters")
-                .contentType(APPLICATION_JSON_VALUE)
-                .content("""
-                        {
-                            "name" : "",
-                            "wins":"",
-                            "draws":"",
-                            "loses":""
-                        }"""))
+                        .contentType(APPLICATION_JSON_VALUE)
+                        .content("""
+                                {
+                                    "name":"",
+                                    "wins":"",
+                                    "draws":"",
+                                    "loses":""
+                                }"""))
                 .andDo(print())
                 .andExpect(status().isBadRequest())
                 .andExpect(header().string("Content-Type", APPLICATION_JSON_VALUE))
                 .andExpect(content().json("""
-[
-{"field": "name","error": "must not be blank"},
-{"field": "wins","error": "must not be blank"},
-{"field": "draws","error": "must not be blank"},
-{"field": "loses","error": "must not be blank"},
-]
-"""));
+                        [
+                        {"field": "name","error": "must not be blank"},
+                        {"field": "wins","error": "must not be blank"},
+                        {"field": "draws","error": "must not be blank"},
+                        {"field": "loses","error": "must not be blank"}
+                        ]
+                        """));
         verifyNoInteractions(createFighterUseCaseMock);
 
     }

@@ -8,8 +8,8 @@ variables:
 
 stages:
   - build
-  - analyze
   - test
+  - analyze
 
 build:
   stage: build

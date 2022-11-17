@@ -6,31 +6,22 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.io.Serializable;
+import java.util.Set;
 
+@Entity
+@Table(name = "client")
 @Data
 @Builder
-@Entity
-@Table(name = "fighter")
 @AllArgsConstructor
 @NoArgsConstructor
-public class FighterEntity implements Serializable {
-    /*
-    CREATE TABLE fighter
-(
-    id   int     NOT NULL AUTO_INCREMENT,
-    name varchar(50) NOT NULL,
-    PRIMARY KEY (id)
-);
-     */
+public class ClientEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    @NotNull
-    @Column(name = "name")
-    private String name;
-
+    //@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    //@JoinColumn(name = "client_id")
+    //private Set<TicketEntity> clientTickets;
+    //tickets
 }

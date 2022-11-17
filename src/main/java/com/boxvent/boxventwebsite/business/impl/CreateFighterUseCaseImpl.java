@@ -31,7 +31,7 @@ public class CreateFighterUseCaseImpl implements CreateFighterUseCase {
         FighterEntity newFighter = FighterEntity.builder()
                 .name(request.getName())
                 .build();
-        FighterEntity savedFighter =fighterRepository.save(newFighter);
+        FighterEntity savedFighter = fighterRepository.save(newFighter);
         saveNewRecord(request.getWins(), request.getDraws(), request.getLoses(), newFighter);
         return  savedFighter;
     }

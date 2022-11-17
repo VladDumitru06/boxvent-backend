@@ -1,0 +1,72 @@
+Database Structure
+
+User:
+id(pk)
+username
+password
+client_id(fk)(Optional)
+
+Role:
+id(pk)
+user_id(fk)
+role
+
+Fighter:
+id(pk)
+first_name
+last_name
+
+Record:
+id(pk)
+fighter_id(fk)
+wins
+draws
+loses
+
+Client:
+id(pk)
+first_name
+last_name
+
+Ticket:
+id(pk)
+client_id(fk -> Client)
+event_id(fk -> Event)
+
+Event:
+id(pk)
+fightcard_id(fk -> Fight_Card)
+location_id(fk -> Location)
+sold_tickets
+available_tickets
+ticket_price
+date
+
+Location:
+id(pk)
+country_id(fk)
+city_id(fk)
+
+Country:
+id(pk)
+country_name
+country_code
+
+City:
+id(pk)
+city_name
+country_id(fk -> Country)
+
+Fight_Card:
+id(pk)
+order_nr
+fight_id(fk)
+event_id(fk -> event)
+
+Fight:
+id(pk)
+fighter_id(fk)
+fighter_id(fk)
+
+Rounds:
+event(fk)
