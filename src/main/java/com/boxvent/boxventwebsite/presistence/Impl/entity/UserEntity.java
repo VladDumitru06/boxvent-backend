@@ -21,7 +21,8 @@ public class UserEntity {
 
     @NotBlank
     @Length(min = 2, max = 20)
-    @Column(name = "username")
+    @Column(name = "username", unique = true)
+
     private String username;
 
     @Column(name = "password")

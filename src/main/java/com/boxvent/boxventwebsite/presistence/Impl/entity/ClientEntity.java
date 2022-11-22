@@ -20,6 +20,8 @@ public class ClientEntity {
     @Column(name = "id")
     private Long id;
 
+    //first_name
+    //last_name
     //@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     //@JoinColumn(name = "client_id")
     //private Set<TicketEntity> clientTickets;

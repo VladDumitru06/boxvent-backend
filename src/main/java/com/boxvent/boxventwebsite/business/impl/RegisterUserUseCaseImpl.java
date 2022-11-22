@@ -1,6 +1,7 @@
 package com.boxvent.boxventwebsite.business.impl;
 
 import com.boxvent.boxventwebsite.business.RegisterUserUseCase;
+import com.boxvent.boxventwebsite.business.exception.UsernameAlreadyExistsException;
 import com.boxvent.boxventwebsite.domain.RegisterRequest;
 import com.boxvent.boxventwebsite.domain.RegisterResponse;
 import com.boxvent.boxventwebsite.presistence.Impl.entity.ClientEntity;
@@ -23,7 +24,10 @@ public class RegisterUserUseCaseImpl implements RegisterUserUseCase {
     @Override
     @Transactional
     public RegisterResponse createNewUser(RegisterRequest request) {
-
+    if(userRepository.getByUsername(request.getUsername()))
+    {
+        throw new UsernameAlreadyExistsException() ;
+    }
             String encodedPassword = passwordEncoder.encode(request.getPassword());
             ClientEntity newClient = ClientEntity.builder().build();
             UserEntity newUser = UserEntity.builder()

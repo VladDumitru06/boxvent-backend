@@ -14,8 +14,8 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreateFighterRequest {
-    @NotNull
     @Length(min = 2)
+    @NotNull
     private String name;
     @NotNull
     private  Long wins;

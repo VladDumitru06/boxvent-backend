@@ -67,6 +67,4 @@ Fight:
 id(pk)
 fighter_id(fk)
 fighter_id(fk)
-
-Rounds:
-event(fk)
+rounds
