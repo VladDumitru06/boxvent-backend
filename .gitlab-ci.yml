@@ -9,7 +9,7 @@ variables:
 stages:
   - build
   - test
-  - analyze
+  - sonarqube
 
 build:
   stage: build
@@ -17,9 +17,9 @@ build:
     - ./gradlew assemble
 
 analyze:
-  stage: analyze
+  stage: sonarqube
   script:
-    - ./gradlew sonar
+    - ./gradlew sonarqube
 
 
 test:
