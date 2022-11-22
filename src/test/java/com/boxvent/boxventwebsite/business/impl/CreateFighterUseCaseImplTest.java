@@ -50,4 +50,15 @@ class CreateFighterUseCaseImplTest {
         verify(fighterRepositoryMock).save(fighterEntity);
         verify(boxingRecordRepositoryMock).save(boxingRecordEntity);
     }
+    @Test
+    void createFighter_shouldNotReturn()
+    {
+        CreateFighterRequest createFighterRequest = CreateFighterRequest.builder().name("Vlad the boxer").wins(10L).draws(2L).loses(1L).build();
+
+        when(fighterRepositoryMock.existsByName(createFighterRequest.getName()))
+                .thenReturn(true);
+
+        assertThrows(FighterNameAlreadyExistsException.class,() -> createFighterUseCase.createFighter(createFighterRequest));
+        verify(fighterRepositoryMock).existsByName(createFighterRequest.getName());
+    }
 }
