@@ -4,22 +4,23 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreateFighterRequest {
-    @Length(min = 2)
+public class CreateFightCardRequest {
     @NotNull
-    private String name;
+    private Long challengerId;
     @NotNull
-    private  Long wins;
+    private Long challengedId;
     @NotNull
-    private  Long draws;
+    private Long orderNumber;
     @NotNull
-    private  Long loses;
+    private Long rounds;
+    @NotNull
+    private Long eventId;
 }
