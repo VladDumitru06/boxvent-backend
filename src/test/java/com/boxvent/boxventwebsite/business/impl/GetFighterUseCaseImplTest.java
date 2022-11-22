@@ -1,5 +1,7 @@
 package com.boxvent.boxventwebsite.business.impl;
 
+import com.boxvent.boxventwebsite.business.exception.FighterNameAlreadyExistsException;
+import com.boxvent.boxventwebsite.business.exception.InvalidFighterException;
 import com.boxvent.boxventwebsite.domain.BoxingRecord;
 import com.boxvent.boxventwebsite.domain.Fighter;
 import com.boxvent.boxventwebsite.presistence.BoxingRecordRepository;
@@ -13,8 +15,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 
@@ -28,7 +29,7 @@ class GetFighterUseCaseImplTest {
     BoxingRecordConverter boxingRecordConverter;
 
     @Test
-    void getFighter() {
+    void getFighter_shouldReturnCreatedFighterId() {
         BoxingRecord boxingRecord = BoxingRecord.builder().wins(10L).draws(0L).loses(2L).build();
         BoxingRecordEntity boxingRecordEntity = BoxingRecordEntity.builder().id(1L).wins(10L).draws(0L).loses(2L).build();
         Fighter fighter = Fighter.builder().id(1L).name("Vlad the boxer").boxingRecord(boxingRecord).build();
@@ -46,6 +47,18 @@ class GetFighterUseCaseImplTest {
         assertEquals(fighter,actualResult);
         verify(fighterRepositoryMock).getReferenceById(1L);
         verify(boxingRecordRepositoryMock).findByFighter(fighterEntity);
+
+    }
+    @Test
+    void getFighter_shouldReturnFighterNotFound() {
+
+        when(fighterRepositoryMock.findById(1L))
+                .thenThrow(InvalidFighterException.class);
+        FighterConverter fighterConverter = new FighterConverter(boxingRecordConverter);
+        GetFighterUseCaseImpl getFighterUseCase = new GetFighterUseCaseImpl(fighterRepositoryMock,fighterConverter);
+
+        assertThrows(InvalidFighterException.class,() -> getFighterUseCase.getFighter(1L));
+        verify(fighterRepositoryMock).findById(1L);
 
     }
 }

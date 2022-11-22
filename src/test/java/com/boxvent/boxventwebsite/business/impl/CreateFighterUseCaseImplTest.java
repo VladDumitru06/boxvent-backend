@@ -51,7 +51,7 @@ class CreateFighterUseCaseImplTest {
         verify(boxingRecordRepositoryMock).save(boxingRecordEntity);
     }
     @Test
-    void createFighter_shouldNotReturn()
+    void createFighter_shouldThrowFighterNameAlreadyExistsException()
     {
         CreateFighterRequest createFighterRequest = CreateFighterRequest.builder().name("Vlad the boxer").wins(10L).draws(2L).loses(1L).build();
 
