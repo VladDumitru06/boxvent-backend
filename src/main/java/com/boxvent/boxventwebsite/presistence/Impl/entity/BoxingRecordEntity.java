@@ -15,15 +15,7 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BoxingRecordEntity {
-    /*
-    id int NOT NULL AUTO_INCREMENT,
-    fighterid int(11) NOT NULL,
-    wins int(10) NOT NULL,
-    draws int(10) NOT NULL,
-    loses int(10) NOT NULL,
-    PRIMARY KEY (id),
-    FOREIGN KEY(fighterid) REFERENCES fighter(id)
-     */
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

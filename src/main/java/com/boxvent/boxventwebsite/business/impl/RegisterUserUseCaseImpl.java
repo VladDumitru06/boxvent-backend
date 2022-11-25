@@ -24,7 +24,7 @@ public class RegisterUserUseCaseImpl implements RegisterUserUseCase {
     @Override
     @Transactional
     public RegisterResponse createNewUser(RegisterRequest request) {
-    if(userRepository.getByUsername(request.getUsername()))
+    if(userRepository.existsByUsername(request.getUsername()))
     {
         throw new UsernameAlreadyExistsException() ;
     }

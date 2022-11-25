@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 
 @RestController
@@ -23,11 +24,13 @@ public class FightersController {
     private final GetFightersUseCase getFightersUseCase;
     private final GetFighterUseCase getFighterUseCase;
     @GetMapping
+    @RolesAllowed({"ROLE_ADMIN","ROLE_CLIENT"})
     public ResponseEntity<GetAllFightersResponse> getAllFighters() {
         GetAllFightersResponse response = getFightersUseCase.getFighters();
         return ResponseEntity.ok(response);
     }
     @GetMapping("{id}")
+    @RolesAllowed({"ROLE_ADMIN","ROLE_CLIENT"})
     public ResponseEntity<Fighter> getFighter(@PathVariable(value="id") final long id){
         final Fighter fighter = getFighterUseCase.getFighter(id);
         if(fighter == null){
@@ -36,6 +39,7 @@ public class FightersController {
         return ResponseEntity.ok().body(fighter);
     }
     @PostMapping()
+    @RolesAllowed("ROLE_ADMIN")
     public ResponseEntity<CreateFighterResponse> createFighter(@RequestBody @Valid CreateFighterRequest request) {
         CreateFighterResponse response = createFighterUseCase.createFighter(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);

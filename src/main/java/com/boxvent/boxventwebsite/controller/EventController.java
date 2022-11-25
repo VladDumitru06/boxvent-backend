@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 
 @RestController
@@ -18,6 +19,7 @@ public class EventController {
     private final CreateFightUseCase createFightUseCase;
 
     @PostMapping
+
     public ResponseEntity<CreateEventResponse> createEvent(@RequestBody @Valid CreateEventRequest request) {
         CreateEventResponse createEventResponse = createEventUseCase.createEvent(request);
         return ResponseEntity.ok(createEventResponse);

@@ -25,6 +25,7 @@ public class UserEntity {
 
     private String username;
 
+    @NotBlank
     @Column(name = "password")
     @Length(max = 100)
     private String password;
