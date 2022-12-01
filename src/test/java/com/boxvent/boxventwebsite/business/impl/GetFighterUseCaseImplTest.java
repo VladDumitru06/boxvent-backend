@@ -14,6 +14,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -35,8 +37,8 @@ class GetFighterUseCaseImplTest {
         Fighter fighter = Fighter.builder().id(1L).name("Vlad the boxer").boxingRecord(boxingRecord).build();
         FighterEntity fighterEntity = FighterEntity.builder().id(1L).name("Vlad the boxer").build();
 
-        when(fighterRepositoryMock.getReferenceById(1L))
-                .thenReturn(FighterEntity.builder().name(fighter.getName()).id(fighter.getId()).build());
+        when(fighterRepositoryMock.findById(1L))
+                .thenReturn(Optional.ofNullable(FighterEntity.builder().name(fighter.getName()).id(fighter.getId()).build()));
         when(boxingRecordRepositoryMock.findByFighter(fighterEntity))
                 .thenReturn(boxingRecordEntity);
 
@@ -45,7 +47,7 @@ class GetFighterUseCaseImplTest {
         Fighter actualResult = getFighterUseCase.getFighter(1L);
 
         assertEquals(fighter,actualResult);
-        verify(fighterRepositoryMock).getReferenceById(1L);
+        verify(fighterRepositoryMock).findById(1L);
         verify(boxingRecordRepositoryMock).findByFighter(fighterEntity);
 
     }
