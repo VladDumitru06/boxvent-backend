@@ -10,6 +10,7 @@ import com.boxvent.boxventwebsite.domain.CreateFighterResponse;
 import com.boxvent.boxventwebsite.domain.GetAllFightersResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.RolesAllowed;
@@ -24,7 +25,7 @@ public class FightersController {
     private final GetFightersUseCase getFightersUseCase;
     private final GetFighterUseCase getFighterUseCase;
     @GetMapping
-    @RolesAllowed({"ROLE_ADMIN","ROLE_CLIENT"})
+    @Secured({"ROLE_ADMIN","ROLE_CLIENT"})
     public ResponseEntity<GetAllFightersResponse> getAllFighters() {
         GetAllFightersResponse response = getFightersUseCase.getFighters();
         return ResponseEntity.ok(response);

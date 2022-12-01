@@ -4,6 +4,7 @@ import com.boxvent.boxventwebsite.business.*;
 import com.boxvent.boxventwebsite.domain.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.RolesAllowed;
@@ -15,8 +16,15 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 public class EventController {
     private final CreateEventUseCase createEventUseCase;
+    private final GetEventsUseCase getEventsUseCase;
     private final CreateFightCardUseCase createFightCardUseCase ;
     private final CreateFightUseCase createFightUseCase;
+    @GetMapping
+    @Secured({"ROLE_ADMIN","ROLE_CLIENT"})
+    public ResponseEntity<GetAllEventsResponse> getAllEvents() {
+        GetAllEventsResponse response = getEventsUseCase.getEvents();
+        return ResponseEntity.ok(response);
+    }
 
     @PostMapping
 

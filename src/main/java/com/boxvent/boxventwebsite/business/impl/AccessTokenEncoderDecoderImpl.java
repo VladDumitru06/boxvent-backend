@@ -37,12 +37,13 @@ public class AccessTokenEncoderDecoderImpl implements AccessTokenEncoder, Access
         if (!CollectionUtils.isEmpty(accessToken.getRoles())) {
             claimsMap.put("roles", accessToken.getRoles());
         }
-
         Instant now = Instant.now();
+        Date expiration= Date.from(now.plus(30, ChronoUnit.MINUTES));
+        System.out.println(expiration);
         return Jwts.builder()
                 .setSubject(accessToken.getSubject())
                 .setIssuedAt(Date.from(now))
-                .setExpiration(Date.from(now.plus(30, ChronoUnit.MINUTES)))
+                .setExpiration(expiration)
                 .addClaims(claimsMap)
                 .signWith(key)
                 .compact();
