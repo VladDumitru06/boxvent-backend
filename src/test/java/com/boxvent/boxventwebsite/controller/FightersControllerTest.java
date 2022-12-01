@@ -48,7 +48,7 @@ class FightersControllerTest {
     @MockBean
     private CreateFighterUseCase createFighterUseCaseMock;
     @MockBean
-    private GetFighterUseCase getFighterUseCase;
+    private GetFighterUseCase getFighterUseCaseMock;
     @MockBean
     private AccessTokenDecoder accessTokenDecoder;
 
@@ -86,9 +86,38 @@ class FightersControllerTest {
                                 """));
         verify(getFightersUseCaseMock).getFighters();
         verifyNoInteractions(createFighterUseCaseMock);
-        verifyNoInteractions(getFighterUseCase);
+        verifyNoInteractions(getFighterUseCaseMock);
     }
+    @Test
+    @WithMockUser(username = "Vlad321", roles = {"CLIENT"})
+    void getFighter_shouldReturn200ResponseWithFighter() throws
+            Exception {
+        BoxingRecord vladRecord = BoxingRecord.builder().wins(10L).draws(0L).loses(2L).build();
+        Fighter vladBoxer = Fighter.builder().id(1L).name("Vlad").boxingRecord(vladRecord).build();
+        ResponseEntity<Fighter> response = new ResponseEntity<>(vladBoxer, HttpStatus.OK);
+        when(getFighterUseCaseMock.getFighter(1L))
+                .thenReturn(response.getBody());
 
+        mockMvc.perform(MockMvcRequestBuilders.get("/fighters/1"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(header().string("Content-Type",
+                        APPLICATION_JSON_VALUE))
+                .andExpect(content().json
+                        ("""
+                                {
+                                    "id": 1,
+                                    "name": "Vlad",
+                                    "boxingRecord": {
+                                        "wins": 10,
+                                        "draws": 0,
+                                        "loses": 2
+                                    }
+                                }   
+                                """));
+        verify(getFighterUseCaseMock).getFighter(1L);
+        verifyNoInteractions(createFighterUseCaseMock);
+    }
     @Test
     @WithMockUser(username = "Vlad321", roles = {"ADMIN"})
     void createFighter_shouldCreateAndReturn201_WhenRequestIsValid() throws
