@@ -4,6 +4,7 @@ import com.boxvent.boxventwebsite.business.AccessTokenDecoder;
 import com.boxvent.boxventwebsite.business.CreateFighterUseCase;
 import com.boxvent.boxventwebsite.business.GetFighterUseCase;
 import com.boxvent.boxventwebsite.business.GetFightersUseCase;
+import com.boxvent.boxventwebsite.business.exception.InvalidFighterException;
 import com.boxvent.boxventwebsite.configuration.security.WebSecurityConfig;
 import com.boxvent.boxventwebsite.domain.*;
 import com.boxvent.boxventwebsite.presistence.Impl.entity.FighterEntity;
@@ -33,7 +34,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+import static org.springframework.http.MediaType.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -115,6 +116,23 @@ class FightersControllerTest {
                                     }
                                 }   
                                 """));
+        verify(getFighterUseCaseMock).getFighter(1L);
+        verifyNoInteractions(createFighterUseCaseMock);
+    }
+    @Test
+    @WithMockUser(username = "Vlad321", roles = {"CLIENT"})
+    void getFighter_shouldReturn400Response() throws
+            Exception {
+
+        when(getFighterUseCaseMock.getFighter(1L))
+                .thenThrow(new InvalidFighterException());
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/fighters/1"))
+                .andDo(print())
+                .andExpect(status().isBadRequest())
+                .andExpect(header().string("Content-Type",
+                        "text/plain;charset=UTF-8"))
+                .andExpect(result -> assertTrue(result.getResolvedException() instanceof InvalidFighterException));
         verify(getFighterUseCaseMock).getFighter(1L);
         verifyNoInteractions(createFighterUseCaseMock);
     }
