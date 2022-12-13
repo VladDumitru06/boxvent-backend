@@ -12,14 +12,14 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 @Service
 final class EventConverter {
-    private final LocationConverter locationConverter;
+    private final CityConverter cityConverter;
     public Event convert(EventEntity event) {
         return Event.builder()
                 .id(event.getId())
                 .name(event.getEventName())
                 .available_tickets(event.getAvailableTickets())
                 .sold_tickets(event.getSoldTickets())
-                .location(locationConverter.convert(event.getLocation()))
+                .city(cityConverter.convert(event.getCity()))
                 .date(event.getDateTime())
                 .build();
     }

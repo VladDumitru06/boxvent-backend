@@ -29,8 +29,8 @@ public class EventEntity {
 
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "location_id", referencedColumnName = "id")
-    private LocationEntity location;
+    @JoinColumn(name = "city_id", referencedColumnName = "id")
+    private CityEntity city;
 
     @NotNull
     @Column(name = "sold_tickets",columnDefinition = "integer default 0")

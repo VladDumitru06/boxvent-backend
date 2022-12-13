@@ -20,7 +20,7 @@ public class EventController {
     private final CreateFightCardUseCase createFightCardUseCase ;
     private final CreateFightUseCase createFightUseCase;
     @GetMapping
-    @Secured({"ROLE_ADMIN","ROLE_CLIENT"})
+    @RolesAllowed({"ROLE_ADMIN","ROLE_CLIENT"})
     public ResponseEntity<GetAllEventsResponse> getAllEvents() {
         GetAllEventsResponse response = getEventsUseCase.getEvents();
         return ResponseEntity.ok(response);

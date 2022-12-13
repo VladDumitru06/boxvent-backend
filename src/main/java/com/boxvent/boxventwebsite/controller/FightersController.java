@@ -25,7 +25,7 @@ public class FightersController {
     private final GetFightersUseCase getFightersUseCase;
     private final GetFighterUseCase getFighterUseCase;
     @GetMapping
-    @Secured({"ROLE_ADMIN","ROLE_CLIENT"})
+    @RolesAllowed({"ROLE_ADMIN","ROLE_CLIENT"})
     public ResponseEntity<GetAllFightersResponse> getAllFighters() {
         GetAllFightersResponse response = getFightersUseCase.getFighters();
         return ResponseEntity.ok(response);

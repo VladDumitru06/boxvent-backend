@@ -2,10 +2,7 @@ package com.boxvent.boxventwebsite.business.impl;
 
 import com.boxvent.boxventwebsite.business.CreateEventUseCase;
 import com.boxvent.boxventwebsite.business.CreateFightCardUseCase;
-import com.boxvent.boxventwebsite.business.exception.EventNameAlreadyExistsException;
-import com.boxvent.boxventwebsite.business.exception.FightCardAlreadyExists;
-import com.boxvent.boxventwebsite.business.exception.InvalidFighterException;
-import com.boxvent.boxventwebsite.business.exception.InvalidLocationException;
+import com.boxvent.boxventwebsite.business.exception.*;
 import com.boxvent.boxventwebsite.domain.CreateEventRequest;
 import com.boxvent.boxventwebsite.domain.CreateEventResponse;
 import com.boxvent.boxventwebsite.domain.CreateFightCardRequest;
@@ -23,7 +20,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class CreateEventUseCaseImpl implements CreateEventUseCase, CreateFightCardUseCase {
     private final EventRepository eventRepository;
-    private final LocationRepository locationRepository;
+    private final CityRepository cityRepository;
     private final FighterRepository fighterRepository;
     private final FightCardRepository fightCardRepository;
     private final FightRepository fightRepository;
@@ -40,14 +37,15 @@ public class CreateEventUseCaseImpl implements CreateEventUseCase, CreateFightCa
     }
     private EventEntity saveEvent(CreateEventRequest request)
     {
-        LocationEntity location = locationRepository.findById(request.getLocationId())
-                .orElseThrow(InvalidLocationException::new);
+        System.out.println(request.getEventDate() + "EVENT DATE");
+        CityEntity city = cityRepository.findByCityName(request.getCityName())
+                .orElseThrow(InvalidCityException::new);
         EventEntity newEvent = EventEntity.builder()
                 .eventName(request.getEventName())
                 .availableTickets(request.getAvailableTickets())
-                .location(location)
+                .city(city)
                 .ticketPrice(request.getTicketPrice())
-                .dateTime(LocalDateTime.now())
+                .dateTime(request.getEventDate())
                 .soldTickets(0L)
                 .build();
         return eventRepository.save(newEvent);

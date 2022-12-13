@@ -29,27 +29,19 @@ CREATE TABLE city
     FOREIGN KEY(country_id) REFERENCES country(id)
 );
 
-CREATE TABLE location
-(
-    id int NOT NULL AUTO_INCREMENT,
-    country_id int NOT NULL,
-    city_id int NOT NULL,
-    PRIMARY KEY (id),
-    FOREIGN KEY(country_id) REFERENCES country(id),
-    FOREIGN KEY(city_id) REFERENCES city(id)
-);
+
 
 CREATE TABLE event
 (
     id   int     NOT NULL AUTO_INCREMENT,
     event_name varchar(100) NOT NULL,
-    location_id int NOT NULL,
+    city_id int NOT NULL,
     sold_tickets int DEFAULT 0,
     available_tickets int NOT NULL,
     ticket_price double precision NOT NULL,
     date_time DATE NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY(location_id) REFERENCES location(id)
+    FOREIGN KEY(city_id) REFERENCES city(id)
 );
 CREATE TABLE fight_card
 (
@@ -70,12 +62,3 @@ CREATE TABLE ticket
     FOREIGN KEY(client_id) REFERENCES client(id),
     FOREIGN KEY(event_id) REFERENCES event(id)
 );
-
-/*@NotNull
-@OneToMany(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "fightcard_id", referencedColumnName = "id")
-    private Set<FightCardEntity> fighter;
-
-    @NotNull
-@Column(name = "country_name")
-    private String country_name;*/

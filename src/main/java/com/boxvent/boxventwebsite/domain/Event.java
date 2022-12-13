@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 public class Event {
     private Long id;
     private String name;
-    private Location location;
+    private City city;
     private Long sold_tickets;
     private Long available_tickets;
     private LocalDateTime date;
