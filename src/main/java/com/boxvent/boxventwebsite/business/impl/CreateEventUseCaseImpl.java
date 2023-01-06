@@ -14,7 +14,6 @@ import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.time.LocalDateTime;
 
 @Service
 @AllArgsConstructor
@@ -32,7 +31,15 @@ public class CreateEventUseCaseImpl implements CreateEventUseCase, CreateFightCa
         {
             throw new EventNameAlreadyExistsException();
         }
+
         EventEntity savedEvent = saveEvent(request);
+        if(!request.getFightCards().isEmpty())
+        {
+            for (CreateFightCardRequest fightCard : request.getFightCards()) {
+                fightCard.setEventId(savedEvent.getId());
+                createFightCard(fightCard);
+            }
+        }
         return CreateEventResponse.builder().eventId(savedEvent.getId()).build();
     }
     private EventEntity saveEvent(CreateEventRequest request)
