@@ -2,6 +2,7 @@ CREATE TABLE fighter
 (
     id   int     NOT NULL AUTO_INCREMENT,
     name varchar(50) NOT NULL,
+    profile varchar(255) NOT NULL,
     PRIMARY KEY (id)
 );
 CREATE TABLE boxing_record

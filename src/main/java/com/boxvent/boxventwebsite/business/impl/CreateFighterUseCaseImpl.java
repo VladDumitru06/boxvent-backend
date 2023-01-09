@@ -11,7 +11,13 @@ import com.boxvent.boxventwebsite.presistence.FighterRepository;
 import com.boxvent.boxventwebsite.presistence.Impl.entity.FighterEntity;
 import org.springframework.stereotype.Service;
 
+import javax.imageio.ImageIO;
 import javax.transaction.Transactional;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.util.Base64;
 
 @Service
 @AllArgsConstructor
@@ -28,12 +34,30 @@ public class CreateFighterUseCaseImpl implements CreateFighterUseCase {
         return CreateFighterResponse.builder().fighterId(savedFighter.getId()).build();
     }
     private FighterEntity saveNewFighter(CreateFighterRequest request) {
+        try {
+            System.out.println(request.getImage().substring(22,100));
+            String base64EncodedImage = request.getImage().substring(22);
+            byte[] decodedBytes = Base64.getDecoder().decode(base64EncodedImage);
+            BufferedImage image = ImageIO.read(new ByteArrayInputStream(decodedBytes));
+            File outputDir = new File("src/main/java/com/boxvent/boxventwebsite/presistence/fighters");
+            if (!outputDir.exists()) {
+                outputDir.mkdir();
+            }
+            File outputFile = new File(outputDir, request.getName() + ".jpg");
+            ImageIO.write(image, "jpg", outputFile);
+
         FighterEntity newFighter = FighterEntity.builder()
                 .name(request.getName())
+                .profile("/" + request.getName() + "/profilePic")
                 .build();
+
         FighterEntity savedFighter = fighterRepository.save(newFighter);
         saveNewRecord(request.getWins(), request.getDraws(), request.getLoses(), newFighter);
         return  savedFighter;
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
     private BoxingRecordEntity saveNewRecord(Long wins,Long draws,Long loses,FighterEntity fighter)
     {

@@ -4,10 +4,12 @@ import com.boxvent.boxventwebsite.business.AccessTokenDecoder;
 import com.boxvent.boxventwebsite.business.CreateFighterUseCase;
 import com.boxvent.boxventwebsite.business.GetFighterUseCase;
 import com.boxvent.boxventwebsite.business.GetFightersUseCase;
+import com.boxvent.boxventwebsite.business.exception.FighterNameAlreadyExistsException;
 import com.boxvent.boxventwebsite.business.exception.InvalidFighterException;
 import com.boxvent.boxventwebsite.configuration.security.WebSecurityConfig;
 import com.boxvent.boxventwebsite.domain.*;
 import com.boxvent.boxventwebsite.presistence.Impl.entity.FighterEntity;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -199,9 +201,5 @@ class FightersControllerTest {
 
     }
 
-    @Test
-    @WithMockUser(username = "Vlad321", roles = {"CLIENT"})
-    void getFighter() {
-    }
 
 }

@@ -18,7 +18,7 @@ import java.io.Console;
 public class FightCardsController {
     private final GetFightCardsUseCase getFightCardsUseCase;
     @GetMapping
-    @RolesAllowed({"ROLE_ADMIN","ROLE_CLIENT"})
+    @RolesAllowed({"ROLE_ADMIN","ROLE_CLIENT","ROLE_GUEST"})
     public ResponseEntity<GetFightCardsByEventResponse> getFightCardsByEvent(@RequestParam(value="id") final Long id) {
         System.out.println(id);
 

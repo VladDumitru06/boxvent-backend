@@ -17,10 +17,7 @@ import org.springframework.util.CollectionUtils;
 import java.security.Key;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class AccessTokenEncoderDecoderImpl implements AccessTokenEncoder, AccessTokenDecoder {
@@ -62,7 +59,19 @@ public class AccessTokenEncoderDecoderImpl implements AccessTokenEncoder, Access
                     .roles(roles)
                     .build();
         } catch (JwtException e) {
-            throw new InvalidAccessTokenException(e.getMessage());
+            // Create a new JWT token with the subject "guest" and the role "GUEST"
+            String guestToken = Jwts.builder()
+                    .setSubject("guest")
+                    .claim("roles", Collections.singletonList("GUEST"))
+                    .signWith(key)
+                    .compact();
+
+            // Return the guest token as an AccessToken object
+            return AccessToken.builder()
+                    .subject("guest")
+                    .roles(Collections.singletonList("GUEST"))
+                    .build();
         }
     }
+
 }

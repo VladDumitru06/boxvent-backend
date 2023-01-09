@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
@@ -32,5 +33,9 @@ public class FighterEntity implements Serializable {
     @NotNull
     @Column(name = "name")
     private String name;
+
+    @NotBlank
+    @Column(name="profile")
+    private String profile;
 
 }
