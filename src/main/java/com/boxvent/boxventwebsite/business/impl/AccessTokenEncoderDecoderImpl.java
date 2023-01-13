@@ -33,6 +33,8 @@ public class AccessTokenEncoderDecoderImpl implements AccessTokenEncoder, Access
         Map<String, Object> claimsMap = new HashMap<>();
         if (!CollectionUtils.isEmpty(accessToken.getRoles())) {
             claimsMap.put("roles", accessToken.getRoles());
+            claimsMap.put("email", accessToken.getEmail());
+            claimsMap.put("id",accessToken.getId());
         }
         Instant now = Instant.now();
         Date expiration= Date.from(now.plus(30, ChronoUnit.MINUTES));

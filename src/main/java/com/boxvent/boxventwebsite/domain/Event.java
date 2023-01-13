@@ -17,5 +17,6 @@ public class Event {
     private City city;
     private Long sold_tickets;
     private Long available_tickets;
+    private Double ticketPrice;
     private LocalDateTime date;
 }

@@ -22,19 +22,16 @@ public class UserEntity {
     @NotBlank
     @Length(min = 2, max = 20)
     @Column(name = "username", unique = true)
-
     private String username;
 
+    @NotBlank
+    @Column(name="email", unique = true)
+    private String email;
     @NotBlank
     @Column(name = "password")
     @Length(max = 100)
     private String password;
 
-    @OneToOne(optional = true,cascade = CascadeType.ALL)
-    @JoinColumn(name = "client_id")
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    private ClientEntity client;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")

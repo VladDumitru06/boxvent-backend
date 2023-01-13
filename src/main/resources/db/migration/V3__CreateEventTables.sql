@@ -56,9 +56,9 @@ CREATE TABLE fight_card
 CREATE TABLE ticket
 (
     id int NOT NULL AUTO_INCREMENT,
-    client_id int NOT NULL,
     event_id int NOT NULL,
+    user_id int NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY(client_id) REFERENCES client(id),
-    FOREIGN KEY(event_id) REFERENCES event(id)
+    FOREIGN KEY(event_id) REFERENCES event(id),
+    FOREIGN KEY(user_id) REFERENCES user(id)
 );

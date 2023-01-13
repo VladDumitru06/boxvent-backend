@@ -49,7 +49,8 @@ public class LoginUseCaseImpl implements LoginUseCase {
                 AccessToken.builder()
                         .subject(user.getUsername())
                         .roles(roles)
-
+                        .email(user.getEmail())
+                        .id(user.getId())
                         .build());
     }
 

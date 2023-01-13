@@ -4,7 +4,6 @@ import com.boxvent.boxventwebsite.business.RegisterUserUseCase;
 import com.boxvent.boxventwebsite.business.exception.UsernameAlreadyExistsException;
 import com.boxvent.boxventwebsite.domain.RegisterRequest;
 import com.boxvent.boxventwebsite.domain.RegisterResponse;
-import com.boxvent.boxventwebsite.presistence.Impl.entity.ClientEntity;
 import com.boxvent.boxventwebsite.presistence.Impl.entity.RoleEnum;
 import com.boxvent.boxventwebsite.presistence.Impl.entity.UserEntity;
 import com.boxvent.boxventwebsite.presistence.Impl.entity.UserRoleEntity;
@@ -29,11 +28,11 @@ public class RegisterUserUseCaseImpl implements RegisterUserUseCase {
         throw new UsernameAlreadyExistsException() ;
     }
             String encodedPassword = passwordEncoder.encode(request.getPassword());
-            ClientEntity newClient = ClientEntity.builder().build();
+
             UserEntity newUser = UserEntity.builder()
                     .username(request.getUsername())
+                    .email(request.getEmail())
                     .password(encodedPassword)
-                    .client(newClient)
                     .build();
             newUser.setUserRoles(Set.of(
                     UserRoleEntity.builder()

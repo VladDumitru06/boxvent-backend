@@ -23,8 +23,8 @@ public class TicketEntity {
 
     @NotNull
     @OneToOne
-    @JoinColumn(name = "client_id",referencedColumnName = "id")
-    private ClientEntity client;
+    @JoinColumn(name = "user_id",referencedColumnName = "id")
+    private UserEntity user;
 
     @NotNull
     @OneToOne
