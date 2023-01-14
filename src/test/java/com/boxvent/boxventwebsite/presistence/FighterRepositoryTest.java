@@ -26,7 +26,7 @@ class FighterRepositoryTest {
     {
         FighterEntity savedFighter = saveFighter("Jackie Chan Jr.");
 
-        FighterEntity expectedFighter = FighterEntity.builder().id(savedFighter.getId()).name("Jackie Chan Jr.").build();
+        FighterEntity expectedFighter = FighterEntity.builder().id(savedFighter.getId()).name("Jackie Chan Jr.").profile("profile").build();
 
         assertEquals(savedFighter,expectedFighter);
 
@@ -48,7 +48,7 @@ class FighterRepositoryTest {
     void findByName_ShouldReturnTheFoundFighter() {
         FighterEntity fighter = saveFighter("Jackie Chan Jr.");
         FighterEntity foundFighter = fighterRepository.findByName("Jackie Chan Jr.");
-        FighterEntity expectedFighter = FighterEntity.builder().id(foundFighter.getId()).name("Jackie Chan Jr.").build();
+        FighterEntity expectedFighter = FighterEntity.builder().id(foundFighter.getId()).name("Jackie Chan Jr.").profile("profile").build();
         assertEquals(expectedFighter,foundFighter);
     }
     @Test
@@ -59,7 +59,7 @@ class FighterRepositoryTest {
     }
     FighterEntity saveFighter(String name)
     {
-        FighterEntity fighter = FighterEntity.builder().name(name).build();
+        FighterEntity fighter = FighterEntity.builder().name(name).profile("profile").build();
         return fighterRepository.save(fighter);
     }
 }
