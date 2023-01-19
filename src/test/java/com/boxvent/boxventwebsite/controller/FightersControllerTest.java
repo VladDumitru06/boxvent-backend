@@ -1,9 +1,6 @@
 package com.boxvent.boxventwebsite.controller;
 
-import com.boxvent.boxventwebsite.business.AccessTokenDecoder;
-import com.boxvent.boxventwebsite.business.CreateFighterUseCase;
-import com.boxvent.boxventwebsite.business.GetFighterUseCase;
-import com.boxvent.boxventwebsite.business.GetFightersUseCase;
+import com.boxvent.boxventwebsite.business.*;
 import com.boxvent.boxventwebsite.business.exception.FighterNameAlreadyExistsException;
 import com.boxvent.boxventwebsite.business.exception.InvalidFighterException;
 import com.boxvent.boxventwebsite.configuration.security.WebSecurityConfig;
@@ -51,7 +48,12 @@ class FightersControllerTest {
     @MockBean
     private CreateFighterUseCase createFighterUseCaseMock;
     @MockBean
+    private UpdateFighterUseCase updateFighterUseCaseMock;
+    @MockBean
     private GetFighterUseCase getFighterUseCaseMock;
+
+    @MockBean
+    private DeleteFighterUseCase deleteFighterUseCaseMock;
     @MockBean
     private AccessTokenDecoder accessTokenDecoder;
 
@@ -144,6 +146,7 @@ class FightersControllerTest {
             Exception {
         CreateFighterRequest expectedFighter = CreateFighterRequest.builder()
                 .name("Vlad the boxer")
+                .image("https://i.imgur.com/1j2j3j4.jpg")
                 .wins(10L)
                 .draws(1L)
                 .loses(5L)
@@ -159,7 +162,8 @@ class FightersControllerTest {
                                 "name":"Vlad the boxer",
                                 "wins":10,
                                 "draws":1,
-                                "loses":5  
+                                "loses":5,
+                                "image":"https://i.imgur.com/1j2j3j4.jpg"  
                                 }
                                 """))
                 .andDo(print())
@@ -184,7 +188,9 @@ class FightersControllerTest {
                                     "name":"",
                                     "wins":"",
                                     "draws":"",
-                                    "loses":""
+                                    "loses":"",
+                                    "image":""
+                                    
                                 }"""))
                 .andDo(print())
                 .andExpect(status().isBadRequest())
@@ -194,7 +200,8 @@ class FightersControllerTest {
                         {"field": "name","error": "length must be between 2 and 2147483647"},
                         {"field": "wins","error": "must not be null"},
                         {"field": "draws","error": "must not be null"},
-                        {"field": "loses","error": "must not be null"}
+                        {"field": "loses","error": "must not be null"},
+                        {"field": "image","error": "must not be blank"}
                         ]
                         """));
         verifyNoInteractions(createFighterUseCaseMock);

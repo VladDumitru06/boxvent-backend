@@ -35,7 +35,13 @@ public class CreateFighterUseCaseImpl implements CreateFighterUseCase {
     }
     private FighterEntity saveNewFighter(CreateFighterRequest request) {
         try {
-            System.out.println(request.getImage().substring(22,100));
+            FighterEntity newFighter = FighterEntity.builder()
+                    .name(request.getName())
+                    .profile("/" + request.getName() + "/profilePic")
+                    .build();
+
+            FighterEntity savedFighter = fighterRepository.save(newFighter);
+
             String base64EncodedImage = request.getImage().substring(22);
             byte[] decodedBytes = Base64.getDecoder().decode(base64EncodedImage);
             BufferedImage image = ImageIO.read(new ByteArrayInputStream(decodedBytes));
@@ -43,15 +49,12 @@ public class CreateFighterUseCaseImpl implements CreateFighterUseCase {
             if (!outputDir.exists()) {
                 outputDir.mkdir();
             }
-            File outputFile = new File(outputDir, request.getName() + ".jpg");
-            ImageIO.write(image, "jpg", outputFile);
+            File outputFile = new File(outputDir, savedFighter.getId() + ".jpg");
+            if(image != null) {
+                ImageIO.write(image, "jpg", outputFile);
+            }
 
-        FighterEntity newFighter = FighterEntity.builder()
-                .name(request.getName())
-                .profile("/" + request.getName() + "/profilePic")
-                .build();
 
-        FighterEntity savedFighter = fighterRepository.save(newFighter);
         saveNewRecord(request.getWins(), request.getDraws(), request.getLoses(), newFighter);
         return  savedFighter;
 

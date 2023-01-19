@@ -7,16 +7,21 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreateTicketRequest {
-    @NotNull
-    private Long userId;
+public class UpdateEventRequest {
+
     @NotNull
     private Long eventId;
-    @NotNull
-    private Long numberOfTickets;
+    private String eventName;
+    private String description;
+    private String cityName;
+    private Long availableTickets;
+    private Double ticketPrice;
+    private LocalDateTime dateTime;
+    private String image;
 }

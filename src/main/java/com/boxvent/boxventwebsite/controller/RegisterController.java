@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 
 @RestController
@@ -19,6 +20,7 @@ public class RegisterController {
     private final RegisterUserUseCase registerUserUseCase;
 
     @PostMapping
+    @RolesAllowed({"ROLE_ADMIN","ROLE_CLIENT","ROLE_GUEST"})
     public ResponseEntity<RegisterResponse> register(@RequestBody @Valid RegisterRequest request) {
         RegisterResponse loginResponse = registerUserUseCase.createNewUser(request);
         return ResponseEntity.ok(loginResponse);

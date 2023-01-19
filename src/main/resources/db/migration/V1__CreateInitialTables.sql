@@ -13,5 +13,5 @@ CREATE TABLE boxing_record
     draws int(10) NOT NULL,
     loses int(10) NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY(fighterid) REFERENCES fighter(id)
+    FOREIGN KEY(fighterid) REFERENCES fighter(id) ON DELETE CASCADE
 );

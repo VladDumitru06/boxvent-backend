@@ -29,7 +29,7 @@ class BoxingRecordRepositoryTest {
     @Test
     void save_ShouldSaveBoxingRecordWithAllFields()
     {
-        FighterEntity fighter = FighterEntity.builder().name("Jackie Chan Jr.").build();
+        FighterEntity fighter = FighterEntity.builder().name("Jackie Chan Jr.").profile("profilePic").build();
 
         if(entityManager.contains(fighter))
         {
@@ -61,7 +61,7 @@ class BoxingRecordRepositoryTest {
     @Test
     void findByFighter_ShouldReturnFightersRecord()
     {
-        FighterEntity fighter = FighterEntity.builder().name("Jackie Chan Jr.").build();
+        FighterEntity fighter = FighterEntity.builder().name("Jackie Chan Jr.").profile("profilePic").build();
 
         if(entityManager.contains(fighter))
         {
@@ -92,7 +92,7 @@ class BoxingRecordRepositoryTest {
     @Test
     void findByFighter_ShouldReturnNullWhenNoFightersRecordFound()
     {
-        FighterEntity fighter = FighterEntity.builder().name("Jackie Chan Jr.").build();
+        FighterEntity fighter = FighterEntity.builder().name("Jackie Chan Jr.").profile("profilePic").build();
 
         if(entityManager.contains(fighter))
         {

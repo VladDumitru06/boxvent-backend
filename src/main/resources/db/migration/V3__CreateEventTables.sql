@@ -6,8 +6,8 @@ CREATE TABLE fight
     challenged_id int NOT NULL,
     rounds int NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY(challenger_id) REFERENCES fighter(id),
-    FOREIGN KEY(challenged_id) REFERENCES fighter(id)
+    FOREIGN KEY(challenger_id) REFERENCES fighter(id) ON DELETE CASCADE,
+    FOREIGN KEY(challenged_id) REFERENCES fighter(id) ON DELETE CASCADE
 );
 
 
@@ -39,7 +39,7 @@ CREATE TABLE event
     sold_tickets int DEFAULT 0,
     available_tickets int NOT NULL,
     ticket_price double precision NOT NULL,
-    date_time DATE NOT NULL,
+    date_time DATETIME NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY(city_id) REFERENCES city(id)
 );
@@ -50,8 +50,8 @@ CREATE TABLE fight_card
     event_id int NOT NULL,
     fight_id int NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY(fight_id) REFERENCES fight(id),
-    FOREIGN KEY(event_id) REFERENCES event(id)
+    FOREIGN KEY(fight_id) REFERENCES fight(id) ON DELETE CASCADE,
+    FOREIGN KEY(event_id) REFERENCES event(id) ON DELETE CASCADE
 );
 CREATE TABLE ticket
 (
@@ -59,6 +59,6 @@ CREATE TABLE ticket
     event_id int NOT NULL,
     user_id int NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY(event_id) REFERENCES event(id),
-    FOREIGN KEY(user_id) REFERENCES user(id)
+    FOREIGN KEY(event_id) REFERENCES event(id) ON DELETE CASCADE,
+    FOREIGN KEY(user_id) REFERENCES user(id) ON DELETE CASCADE
 );

@@ -22,6 +22,7 @@ final class EventConverter {
                 .city(cityConverter.convert(event.getCity()))
                 .date(event.getDateTime())
                 .ticketPrice(event.getTicketPrice())
+                .description(event.getDescription())
                 .build();
     }
 

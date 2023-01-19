@@ -19,6 +19,8 @@ public class CreateEventRequest {
     @NotBlank
     private String eventName;
     @NotBlank
+    private String description;
+    @NotBlank
     private String cityName;
     @NotNull
     private Long availableTickets;
@@ -28,4 +30,6 @@ public class CreateEventRequest {
     private Double ticketPrice;
     @NotNull
     private Set<CreateFightCardRequest> fightCards;
+    @NotBlank
+    private String image;
 }

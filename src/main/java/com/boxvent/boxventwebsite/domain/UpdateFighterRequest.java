@@ -5,18 +5,20 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreateTicketRequest {
+public class UpdateFighterRequest {
+
     @NotNull
-    private Long userId;
-    @NotNull
-    private Long eventId;
-    @NotNull
-    private Long numberOfTickets;
+    private Long fighterId;
+    private String fighterName;
+    private Long wins;
+    private Long draws;
+    private Long loses;
+    private String image;
 }

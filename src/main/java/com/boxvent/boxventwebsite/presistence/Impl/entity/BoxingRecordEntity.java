@@ -22,7 +22,7 @@ public class BoxingRecordEntity {
     private Long id;
 
     @NotNull
-    @OneToOne(cascade = CascadeType.MERGE)
+    @OneToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "fighterid", referencedColumnName = "id")
     private FighterEntity fighter;
 

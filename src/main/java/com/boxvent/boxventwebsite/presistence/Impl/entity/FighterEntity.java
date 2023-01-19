@@ -17,14 +17,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FighterEntity implements Serializable {
-    /*
-    CREATE TABLE fighter
-(
-    id   int     NOT NULL AUTO_INCREMENT,
-    name varchar(50) NOT NULL,
-    PRIMARY KEY (id)
-);
-     */
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

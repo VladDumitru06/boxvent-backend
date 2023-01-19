@@ -19,4 +19,5 @@ public class Event {
     private Long available_tickets;
     private Double ticketPrice;
     private LocalDateTime date;
+    private String description;
 }

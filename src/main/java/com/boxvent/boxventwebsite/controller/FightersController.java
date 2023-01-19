@@ -1,13 +1,8 @@
 package com.boxvent.boxventwebsite.controller;
 
-import com.boxvent.boxventwebsite.business.GetFighterUseCase;
-import com.boxvent.boxventwebsite.domain.Fighter;
+import com.boxvent.boxventwebsite.business.*;
+import com.boxvent.boxventwebsite.domain.*;
 import lombok.AllArgsConstructor;
-import com.boxvent.boxventwebsite.business.CreateFighterUseCase;
-import com.boxvent.boxventwebsite.business.GetFightersUseCase;
-import com.boxvent.boxventwebsite.domain.CreateFighterRequest;
-import com.boxvent.boxventwebsite.domain.CreateFighterResponse;
-import com.boxvent.boxventwebsite.domain.GetAllFightersResponse;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
@@ -33,6 +28,8 @@ public class FightersController {
     private final CreateFighterUseCase createFighterUseCase;
     private final GetFightersUseCase getFightersUseCase;
     private final GetFighterUseCase getFighterUseCase;
+    private  final UpdateFighterUseCase updateFighterUseCase;
+    private final DeleteFighterUseCase deleteFighterUseCase;
     @GetMapping
     @RolesAllowed({"ROLE_ADMIN","ROLE_CLIENT","ROLE_GUEST"})
     public ResponseEntity<GetAllFightersResponse> getAllFighters() {
@@ -54,12 +51,12 @@ public class FightersController {
         CreateFighterResponse response = createFighterUseCase.createFighter(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
-    @GetMapping("/{fighterName}/profilePic")
+    @GetMapping("/{fighterId}/profilePic")
     @RolesAllowed({"ROLE_ADMIN","ROLE_CLIENT","ROLE_GUEST"})
-    public ResponseEntity<Resource> getImage(@PathVariable(value="fighterName") String fighterName) {
+    public ResponseEntity<Resource> getImage(@PathVariable(value="fighterId") Long fighterId) {
         try {
             // Load the image file from the specified location
-            File image = new File("src/main/java/com/boxvent/boxventwebsite/presistence/fighters/" + fighterName + ".jpg");
+            File image = new File("src/main/java/com/boxvent/boxventwebsite/presistence/fighters/" + fighterId + ".jpg");
             InputStream inputStream = new FileInputStream(image);
 
             // Return the image file as a response
@@ -70,6 +67,20 @@ public class FightersController {
             // If the image file is not found, return a 404 response
             return ResponseEntity.notFound().build();
         }
+    }
+    @PutMapping("/{fighterId}")
+    @RolesAllowed({"ROLE_ADMIN"})
+    public ResponseEntity<Fighter> updateEvent(@PathVariable(value="fighterId") Long fighterId, @RequestBody UpdateFighterRequest request)
+    {
+        Fighter updatedFighter = updateFighterUseCase.UpdateFighter(request);
+        return ResponseEntity.ok(updatedFighter);
+    }
+    @DeleteMapping("/{fighterId}")
+    @RolesAllowed({"ROLE_ADMIN"})
+    public ResponseEntity deleteEvent(@PathVariable(value="fighterId") Long fighterId)
+    {
+        deleteFighterUseCase.deleteFighter(fighterId);
+        return ResponseEntity.ok().build();
     }
 
 }

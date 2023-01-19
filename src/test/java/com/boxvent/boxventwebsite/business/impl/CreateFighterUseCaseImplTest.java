@@ -30,14 +30,14 @@ class CreateFighterUseCaseImplTest {
 
     @Test
     void createFighter_shouldReturnCreatedFighterId() {
-        CreateFighterRequest createFighterRequest = CreateFighterRequest.builder().name("Vlad the boxer").wins(10L).draws(2L).loses(1L).build();
-        FighterEntity fighterEntity = FighterEntity.builder().name(createFighterRequest.getName()).build();
+        CreateFighterRequest createFighterRequest = CreateFighterRequest.builder().name("Vlad the boxer").wins(10L).draws(2L).loses(1L).image("/Vlad the boxer/profilePic").build();
+        FighterEntity fighterEntity = FighterEntity.builder().name(createFighterRequest.getName()).profile(createFighterRequest.getImage()).build();
         BoxingRecordEntity boxingRecordEntity = BoxingRecordEntity.builder().wins(10L).draws(2L).loses(1L).fighter(fighterEntity).build();
 
         when(fighterRepositoryMock.existsByName(createFighterRequest.getName()))
                 .thenReturn(false);
         when(fighterRepositoryMock.save(fighterEntity))
-                .thenReturn(FighterEntity.builder().id(1L).name(createFighterRequest.getName()).build());
+                .thenReturn(FighterEntity.builder().id(1L).name(createFighterRequest.getName()).profile(createFighterRequest.getImage()).build());
         when(boxingRecordRepositoryMock.save(boxingRecordEntity))
                 .thenReturn(boxingRecordEntity.builder().id(1L).wins(10L).draws(2L).loses(1L).fighter(fighterEntity).build());
 
@@ -50,6 +50,7 @@ class CreateFighterUseCaseImplTest {
         verify(fighterRepositoryMock).save(fighterEntity);
         verify(boxingRecordRepositoryMock).save(boxingRecordEntity);
     }
+
     @Test
     void createFighter_shouldThrowFighterNameAlreadyExistsException()
     {

@@ -13,7 +13,13 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
+import javax.imageio.ImageIO;
 import javax.transaction.Transactional;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.util.Base64;
 
 @Service
 @AllArgsConstructor
@@ -32,7 +38,9 @@ public class CreateEventUseCaseImpl implements CreateEventUseCase, CreateFightCa
             throw new EventNameAlreadyExistsException();
         }
 
+        System.out.println(request.getEventDate());
         EventEntity savedEvent = saveEvent(request);
+        System.out.println(savedEvent.getDateTime());
         if(!request.getFightCards().isEmpty())
         {
             for (CreateFightCardRequest fightCard : request.getFightCards()) {
@@ -44,18 +52,34 @@ public class CreateEventUseCaseImpl implements CreateEventUseCase, CreateFightCa
     }
     private EventEntity saveEvent(CreateEventRequest request)
     {
-        System.out.println(request.getEventDate() + "EVENT DATE");
         CityEntity city = cityRepository.findByCityName(request.getCityName())
                 .orElseThrow(InvalidCityException::new);
         EventEntity newEvent = EventEntity.builder()
                 .eventName(request.getEventName())
+                .description(request.getDescription())
                 .availableTickets(request.getAvailableTickets())
                 .city(city)
                 .ticketPrice(request.getTicketPrice())
                 .dateTime(request.getEventDate())
                 .soldTickets(0L)
                 .build();
-        return eventRepository.save(newEvent);
+        EventEntity savedEvent = eventRepository.save(newEvent);
+        try {
+            String base64EncodedImage = request.getImage().substring(22);
+            byte[] decodedBytes = Base64.getDecoder().decode(base64EncodedImage);
+            BufferedImage image = ImageIO.read(new ByteArrayInputStream(decodedBytes));
+            File outputDir = new File("src/main/java/com/boxvent/boxventwebsite/presistence/events");
+            if (!outputDir.exists()) {
+                outputDir.mkdir();
+            }
+            File outputFile = new File(outputDir, savedEvent.getId() + ".jpg");
+            ImageIO.write(image, "jpg", outputFile);
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return savedEvent;
     }
 
     @Override

@@ -19,11 +19,13 @@ public class TicketController {
     private final CreateTicketUseCase createTicketUseCase;
     private final GetTicketsUseCase getTicketsUseCase;
     @PostMapping
+    @RolesAllowed({"ROLE_ADMIN"})
     public ResponseEntity<CreateTicketResponse> createTicket(@RequestBody @Valid CreateTicketRequest request) {
         CreateTicketResponse createTicketResponse = createTicketUseCase.createTicket(request);
         return ResponseEntity.ok(createTicketResponse);
     }
     @GetMapping
+    @RolesAllowed({"ROLE_ADMIN","ROLE_CLIENT","ROLE_GUEST"})
     public ResponseEntity<GetTicketsByUserResponse> getTickets(@RequestParam(value="id") final Long id){
         GetTicketsByUserResponse response = getTicketsUseCase.getTickets(id);
         return ResponseEntity.ok(response);
