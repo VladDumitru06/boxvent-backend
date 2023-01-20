@@ -18,7 +18,6 @@ public class LoginController {
     private final LoginUseCase loginUseCase;
 
     @PostMapping
-    @RolesAllowed({"ROLE_ADMIN","ROLE_CLIENT","ROLE_GUEST"})
     public ResponseEntity<LoginResponse> login(@RequestBody @Valid LoginRequest loginRequest) {
         LoginResponse loginResponse = loginUseCase.login(loginRequest);
         return ResponseEntity.ok(loginResponse);

@@ -20,7 +20,6 @@ public class RegisterController {
     private final RegisterUserUseCase registerUserUseCase;
 
     @PostMapping
-    @RolesAllowed({"ROLE_ADMIN","ROLE_CLIENT","ROLE_GUEST"})
     public ResponseEntity<RegisterResponse> register(@RequestBody @Valid RegisterRequest request) {
         RegisterResponse loginResponse = registerUserUseCase.createNewUser(request);
         return ResponseEntity.ok(loginResponse);
