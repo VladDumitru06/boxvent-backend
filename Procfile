@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -Dserver.port=8080 -Dspring.profiles.active=default -jar build/libs/boxventwebsite-0.0.1-SNAPSHOT.jar
+web: java $JAVA_OPTS -Dserver.port=3306 -Dspring.profiles.active=default -jar build/libs/boxventwebsite-0.0.1-SNAPSHOT.jar
