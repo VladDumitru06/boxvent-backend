@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 @RestController
-@CrossOrigin(origins ={"http://localhost:3000"})
+@CrossOrigin(origins ={"*"})
 @AllArgsConstructor
 @RequestMapping("/fighters")
 public class FightersController {
