@@ -13,7 +13,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/tickets")
-@CrossOrigin(origins ={"http://localhost:3000"})
+@CrossOrigin(origins ={"https://boxvent-frontend.herokuapp.com/"})
 @RequiredArgsConstructor
 public class TicketController {
     private final CreateTicketUseCase createTicketUseCase;

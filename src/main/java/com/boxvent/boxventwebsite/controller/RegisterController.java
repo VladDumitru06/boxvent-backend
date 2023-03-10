@@ -14,7 +14,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/register")
-@CrossOrigin(origins ={"http://localhost:3000"})
+@CrossOrigin(origins ={"https://boxvent-frontend.herokuapp.com/"})
 @RequiredArgsConstructor
 public class RegisterController {
     private final RegisterUserUseCase registerUserUseCase;

@@ -12,7 +12,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/locations")
-@CrossOrigin(origins ={"http://localhost:3000"})
+@CrossOrigin(origins ={"https://boxvent-frontend.herokuapp.com/"})
 @RequiredArgsConstructor
 public class LocationController {
     private final CreateLocationUseCase createLocationUseCase;

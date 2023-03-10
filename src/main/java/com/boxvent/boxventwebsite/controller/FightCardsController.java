@@ -13,7 +13,7 @@ import java.io.Console;
 
 @RestController
 @RequestMapping("/fightcards")
-@CrossOrigin(origins ={"http://localhost:3000"})
+@CrossOrigin(origins ={"https://boxvent-frontend.herokuapp.com/"})
 @RequiredArgsConstructor
 public class FightCardsController {
     private final GetFightCardsUseCase getFightCardsUseCase;
