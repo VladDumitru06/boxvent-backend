@@ -20,7 +20,7 @@ import java.io.InputStream;
 
 @RestController
 @RequestMapping("/events")
-@CrossOrigin(origins ={"http://https://boxvent-frontend.herokuapp.com/"})
+@CrossOrigin(origins ={"http://https://boxvent-frontend.herokuapp.com:3000"})
 @RequiredArgsConstructor
 public class EventController {
     private final CreateEventUseCase createEventUseCase;
