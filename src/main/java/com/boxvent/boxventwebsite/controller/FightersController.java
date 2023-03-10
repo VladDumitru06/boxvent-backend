@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 @RestController
-@CrossOrigin(origins ={"https://boxvent-frontend.herokuapp.com:8080"})
+@CrossOrigin(origins ={"https://boxvent-frontend.herokuapp.com/"})
 @AllArgsConstructor
 @RequestMapping("/fighters")
 public class FightersController {
